@@ -22,7 +22,7 @@ function router(){
 	}
 
 	if ( viewType === 'hour' ) {
-		handle_Hour_Data(lat, lng)
+		handle_Hours_Data(lat, lng)
 	}
 
 	if ( viewType === 'days' ) {
@@ -87,22 +87,118 @@ function handle_Loading_Page() {
 
 // Promise Function
 function make_Weather_Promise(lat, lng) {
-	var forcast_URL = baseURL + '/' + apiKey + '/' + lat + '/' + lng  + '?callback=?'
+	var forcast_URL = baseURL + '/' + apiKey + '/' + lat + ',' + lng  + '?callback=?'
  	var promise = $.getJSON(forcast_URL)
  	return promise
 }
 
 // Render Pages
 function render_Now_Weather(nowData) {
-	console.log(nowData)
+	
+	var weekday = new Array(7);
+	    weekday[0] = "Sunday";
+	    weekday[1] = "Monday";
+	    weekday[2] = "Tuesday";
+	    weekday[3] = "Wednesday";
+	    weekday[4] = "Thursday";
+	    weekday[5] = "Friday";
+	    weekday[6] = "Saturday";
+	    
+	var monthName = new Array(7);
+	    monthName[0] = "January";
+	    monthName[1] = "Febuary";
+	    monthName[2] = "March";
+	    monthName[3] = "April";
+	    monthName[4] = "May";
+	    monthName[5] = "June";
+	    monthName[6] = "July";
+	    monthName[7] = "August";
+	    monthName[8] = "September";
+	    monthName[9] = "October";
+	    monthName[10] = "November";
+	    monthName[11] = "December";
+
+	var now_Info = nowData.currently
+	var temp = now_Info.temperature
+	var date_Info = now_Info.time
+	var date = new Date(date_Info)
+	var day = weekday[date.getDay()];
+	var month = monthName[date.getMonth()]
+	var	dayOfMonth = date.getDate()
+	var fullYear = date.getFullYear()
+	var fullDate = day + ' ' + month + ' ' + dayOfMonth + ' ' + fullYear
+	var rain = now_Info.precipProbability
+	var summary = now_Info.summary
+	var HTML_Str_To_DOM = '<div class="now alignChildren"><div class="data"><div class="tempLevel"></div><p class="date">'
+		HTML_Str_To_DOM += fullDate + '</p>'
+		HTML_Str_To_DOM += '<p class="temp">'+ temp + '</p>'
+		HTML_Str_To_DOM  += '<div class="rainLevel">' + rain + '</div>'
+		HTML_Str_To_DOM += '<div class="summery">' + summary + '</div></div></div>'
+
+	console.log(day)
+
+    ////////// Setting the temp bar height
+    var container = document.querySelector('.weatherOutput').style.height = '500px'
+    var tempLevel = document.querySelector('.tempLevel').style.height = parseInt( temp ) / 100 *  parseInt( container )  + 'px'
+    var rainLevel = document.querySelector('.rainLevel').style.height = parseInt(rain)
+
+	console.log(HTML_Str_To_DOM)
+
+    return container.innerHTML = HTML_Str_To_DOM
 }
 
-function render_Hours_Weather(hourData) {
-	console.log(hourData)
+function render_Hours_Weather(hoursData) {
+	console.log(hoursData)
 }
 
 function render_Days_Weather(daysData) {
-	console.log(daysData)
+		
+	var weekday = new Array(7);
+	    weekday[0] = "Sunday";
+	    weekday[1] = "Monday";
+	    weekday[2] = "Tuesday";
+	    weekday[3] = "Wednesday";
+	    weekday[4] = "Thursday";
+	    weekday[5] = "Friday";
+	    weekday[6] = "Saturday";
+	    
+	var monthName = new Array(7);
+	    monthName[0] = "January";
+	    monthName[1] = "Febuary";
+	    monthName[2] = "March";
+	    monthName[3] = "April";
+	    monthName[4] = "May";
+	    monthName[5] = "June";
+	    monthName[6] = "July";
+	    monthName[7] = "August";
+	    monthName[8] = "September";
+	    monthName[9] = "October";
+	    monthName[10] = "November";
+	    monthName[11] = "December";
+
+	// var days_Info = DaysData
+	// var temp = days_Info.temperature
+	// var date_Info = now_Info.time
+	// var date = new Date(date_Info)
+	// var day = weekday[date.getDay()];
+	// var month = monthName[date.getMonth()]
+	// var	dayOfMonth = date.getDate()
+	// var fullYear = date.getFullYear()
+	// var fullDate = day + ' ' + month + ' ' + dayOfMonth + ' ' + fullYear
+	var HTML_Str_To_DOM = ''
+	var daysArray = daysData.daily.data
+
+	for (var i = 0; i < daysArray.length; i++) {
+		HTML_Str_To_DOM += '<div class="days">'
+		HTML_Str_To_DOM += 	'<div class="date">' + 'fullDate' + '</div>'
+		HTML_Str_To_DOM += 	'<div class="max">'+ 'daysArray.temperatureMax[i]' + '</div>'
+		HTML_Str_To_DOM += 	'<div class="min">' + 'daysArray.temperatureMinp[i]' + '</div>'
+		HTML_Str_To_DOM += 	'<div class="rain">' + 'daysArray.precipProbability[i]' + '</div></div>'
+	}
+
+	console.log(daysArray)
+
+	return container.innerHTML = HTML_Str_To_DOM
 }
 
 // Search Function
@@ -149,11 +245,24 @@ function _formattedURLParams(paramsObj) {
     return '?' + returnString
 }
 
+
 var apiKey = 'd7c581e2b766cf40745ce91f6d928b84'
 var baseURL = 'https://api.forecast.io/forecast'
 var container = document.querySelector('.weather')
 var buttonsContainer = document.querySelector('.buttons')
 var searchBar = document.querySelector('input[type=search]')
+
+function convertMS(ms) {
+var d, h, m, s;
+  s = Math.floor(ms / 1000);
+  m = Math.floor(s / 60);
+  s = s % 60;
+  h = Math.floor(m / 60);
+  m = m % 60;
+  d = Math.floor(h / 24);
+  h = h % 24;
+return { d: d, h: h, m: m, s: s };
+};
 
 searchBar.addEventListener('keydown', newSearch)
 window.addEventListener('hashchange', router)

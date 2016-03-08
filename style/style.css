@@ -15,3 +15,39 @@ html {
     font-size: medium;
     vertical-align: top;
 }
+
+
+#container * {
+	border: 1px solid grey;
+}
+
+.weather {
+	height:400px;
+	text-align: center;
+}
+
+button {
+	width: 100px;
+	height: 100px;
+}
+
+.rainLevel {
+	min-height: 10px;
+	width: 100px;
+	background-color: green;
+}
+
+.tempLevel {
+	width: 100px;
+	background-color: red;
+}
+
+.now {
+	height: 500px;
+}
+
+.window {
+	position: relative;
+	width: 500px;
+	display: inline-block;
+}
