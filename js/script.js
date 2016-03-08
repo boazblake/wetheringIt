@@ -138,9 +138,9 @@ function render_Now_Weather(nowData) {
 	console.log(day)
 
     ////////// Setting the temp bar height
-    var container = document.querySelector('.weatherOutput').style.height = '500px'
-    var tempLevel = document.querySelector('.tempLevel').style.height = parseInt( temp ) / 100 *  parseInt( container )  + 'px'
-    var rainLevel = document.querySelector('.rainLevel').style.height = parseInt(rain)
+    // var container = document.querySelector('.weatherOutput').style.height = '500px'
+    // var tempLevel = document.querySelector('.tempLevel').style.height = parseInt( temp ) / 100 *  parseInt( container )  + 'px'
+    // var rainLevel = document.querySelector('.rainLevel').style.height = parseInt(rain)
 
 	console.log(HTML_Str_To_DOM)
 
@@ -148,7 +148,61 @@ function render_Now_Weather(nowData) {
 }
 
 function render_Hours_Weather(hoursData) {
-	console.log(hoursData)
+
+    console.log(hoursData.hourly)
+
+    var hour_summery = hoursData.hourly.summary
+    	console.log(hour_summery)
+
+    var hour_by_Hour_Array = hoursData.hourly.data
+
+    function View_Constructor(dom_node_element, templateBuilder_fn) {
+        this._node_element = dom_node_element
+        this._template = templateBuilder_fn
+
+        this.renderHTML = function(input_data) {
+
+            var targetDOM_element = document.querySelector(this._node_element)
+
+            targetDOM_element.innerHTML = this._template(input_data)
+
+            console.log(targetDOM_element)
+        }
+    }
+
+    var someHTMLTemplate = null
+
+    function hour_by_Hour_Template(hour_Array) {
+        var array_HTML_str = ''
+        console.log(hour_Array)
+        var hour = 0
+        // for (var i = 0; i < hour_Array.length; i++) {
+
+            for (var i = 1; i < hour_Array.length; i++) {
+            var fullDate = new Date(hour_Array[i].time)
+		   
+                hour = hour_Array[i].time
+
+        console.log(hour)
+           
+            var hour_Box = '<p>Date: ' + hour + '</p>'
+                hour_Box += '<p>T: ' + hour_Array[i].temperature + 'F</p>'
+                hour_Box += '<p> R: ' + hour_Array[i].precipProbability + '</p>'
+                array_HTML_str += '<div class="hourContainer">' + hour_Box + '</div>'
+            
+                // ////////// Setting the temp bar height
+                var tempLevel = document.querySelector('.tempLevel').style.height = parseInt(hour_Array[i].temperature)+"px";
+                var rainLevel = document.querySelector('.rainLevel').style.height = parseInt(hour_Array[i].precipProbability) * 100 + 'px';
+
+            }
+
+        // }
+        return '<div class="hour"><h3>Today will be: ' +  hour_summery +'</h3>'+ array_HTML_str+'</div>'
+    }
+
+    var hourViewInstance = new View_Constructor('.weatherOutput', hour_by_Hour_Template)
+    
+    hourViewInstance.renderHTML(hour_by_Hour_Array)
 }
 
 function render_Days_Weather(daysData) {
@@ -176,28 +230,29 @@ function render_Days_Weather(daysData) {
 	    monthName[10] = "November";
 	    monthName[11] = "December";
 
-	// var days_Info = DaysData
-	// var temp = days_Info.temperature
-	// var date_Info = now_Info.time
-	// var date = new Date(date_Info)
-	// var day = weekday[date.getDay()];
-	// var month = monthName[date.getMonth()]
-	// var	dayOfMonth = date.getDate()
-	// var fullYear = date.getFullYear()
-	// var fullDate = day + ' ' + month + ' ' + dayOfMonth + ' ' + fullYear
-	var HTML_Str_To_DOM = ''
+	var day_Info = daysData.daily.summary
 	var daysArray = daysData.daily.data
 
+
+	var HTML_Str_To_DOM = ''
+
 	for (var i = 0; i < daysArray.length; i++) {
+		var date = new Date(daysArray[i].time)
+			console.log(date)
+		var day = weekday[date.getDay()];
+		var month = monthName[date.getMonth()]
+		var	dayOfMonth = date.getDate()
+		var fullYear = date.getFullYear()
+		var fullDate = day + ' ' + month + ' ' + dayOfMonth + ' ' + fullYear
+
 		HTML_Str_To_DOM += '<div class="days">'
-		HTML_Str_To_DOM += 	'<div class="date">' + 'fullDate' + '</div>'
-		HTML_Str_To_DOM += 	'<div class="max">'+ 'daysArray.temperatureMax[i]' + '</div>'
-		HTML_Str_To_DOM += 	'<div class="min">' + 'daysArray.temperatureMinp[i]' + '</div>'
-		HTML_Str_To_DOM += 	'<div class="rain">' + 'daysArray.precipProbability[i]' + '</div></div>'
+		HTML_Str_To_DOM += 	'<h6 class="date">' + fullDate + '</h6>'
+		HTML_Str_To_DOM += 	'<div class="max">'+ daysArray[i].temperatureMax + '</div>'
+		HTML_Str_To_DOM += 	'<div class="min">' + daysArray[i].temperatureMin + '</div>'
+		HTML_Str_To_DOM += 	'<div class="rain">' + daysArray[i].precipProbability + '</div></div>'
 	}
 
-	console.log(daysArray)
-
+	console.log(HTML_Str_To_DOM)
 	return container.innerHTML = HTML_Str_To_DOM
 }
 
