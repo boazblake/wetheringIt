@@ -80,6 +80,11 @@ function render_Now_Weather(nowData) {
     var rainHeight = 300
     var redHeight = ((parseInt(temp)) / maxTemp) * thermometer  // write a comment here to explain: // the relationship between the temp variables is (cross multiplied) to the reltaionship between the heights of the thermom div and its background 
     document.querySelector('.tempLevel').style.height = redHeight + "px"
+    console.log(rain)
+    console.log(parseInt(temp))
+    console.log(temp)
+    console.log(maxTemp)
+    console.log(redHeight)
     
     console.log(rain)
     var greenHeight = (parseInt(rain) * rainHeight) * maxRain // write a comment here to explain
@@ -120,14 +125,14 @@ function render_Hours_Weather(hoursData) {
         console.log(hour_Array)
 
 
-        for (var i = 1; i < hour_Array.length; i++) {
+        for (var i = 1; i < 25; i++) {
             var fullDate = new Date(hour_Array[i].time * 1000)
             hour = fullDate.getHours()
             var hourArrayTemp = hour_Array[i].temperature.toPrecision(2)
-            var hourArrayRain = hour_Array[i].precipProbability.toPrecision(2)
-            var hour_Box = '<p class="hed">Hour: ' + hour + ':00' + '</p>'
-            hour_Box += '<div class="data"><p class="tempHours">T: ' + hourArrayTemp + 'F</p>'
-            hour_Box += '<p class="rainHours"> R: ' + hourArrayRain + '</p></div>'
+            var hourArrayRain = hour_Array[i].humidity.toPrecision(2)
+            var hour_Box = '<p class="hed">' + hour + ':00' + '</p>'
+            hour_Box += '<div class="data"><div class="tempWrapper"><p class="tempHours"> ' + hourArrayTemp + '&deg</p></div>'
+            hour_Box += '<div class="rainWrapper"><p class="rainHours">' + hourArrayRain + '%</p></div></div>'
             array_HTML_str += '<div class="hourContainer">' + hour_Box + '</div>'
         }
 
@@ -139,9 +144,19 @@ function render_Hours_Weather(hoursData) {
     hourViewInstance.renderHTML(hour_by_Hour_Array)
 
     // ////////// Setting the temp bar height
-    var tempHours = document.querySelector('.tempHours').style.height = parseInt(hourArrayTemp) + "px";
-    var rainHours = document.querySelector('.rainHours').style.height = parseInt(hourArrayRain) * 100 + 'px';
-}
+    // //defining arbitary max values for the temp and the rain gauages for the 100% reference. (myTemp/maxTemp * myHeight/maxHeight) - thankyou for making me finally learn this relationship!
+    // var maxTemp = 150
+    // var maxRain = 150
+    // var thermometer = 100
+    // var rainHeight = 100
+    // var redHeight = ((parseInt(hourArrayTemp)) / maxTemp) * thermometer  // write a comment here to explain: // the relationship between the temp variables is (cross multiplied) to the reltaionship between the heights of the thermom div and its background 
+    // document.querySelector('.tempHours').style.height = '2%' //redHeight + "%"
+    
+    // console.log(hourArrayRain)
+    // var greenHeight = (parseInt(hourArrayRain) * rainHeight) * maxRain // write a comment here to explain
+    // document.querySelector('.rainHours').style.height = '1.4%'//parseInt(hourArrayRain * 100) + '%'
+    // console.log(hourArrayTemp)
+   }
 
 function render_Days_Weather(daysData) {
     console.log(daysData)
@@ -187,9 +202,9 @@ function render_Days_Weather(daysData) {
         HTML_Str_To_DOM += '<div class="week">'
         HTML_Str_To_DOM +=    '<div class="dayDate"><h5 class="date">' + fullDate + '</h5></div>'
         HTML_Str_To_DOM +=    '<div class="dayData">'
-        HTML_Str_To_DOM +=        '<div class="tempMaxHeight"><div class="max">' + daysArray[i].temperatureMax.toPrecision(2) + '</div></div>'
-        HTML_Str_To_DOM +=        '<div class="tempMinHeight"><div class="min">' + daysArray[i].temperatureMin.toPrecision(2) + '</div></div>'
-        HTML_Str_To_DOM +=        '<div class="rainHeight"><div class="rainDays">' + daysArray[i].precipProbability.toPrecision(2) + '</div></div>'
+        HTML_Str_To_DOM +=        '<div class="tempMaxHeight"><div class="max">Tmax' + daysArray[i].temperatureMax.toPrecision(2) + '</div></div>'
+        HTML_Str_To_DOM +=        '<div class="tempMinHeight"><div class="min">Tmin' + daysArray[i].temperatureMin.toPrecision(2) + '</div></div>'
+        HTML_Str_To_DOM +=        '<div class="rainHeight"><div class="rainDays">Humidity' + daysArray[i].humidity.toPrecision(2) + '</div></div>'
         HTML_Str_To_DOM +=    '</div>'
         HTML_Str_To_DOM += '</div>'
     }

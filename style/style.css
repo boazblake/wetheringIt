@@ -2,10 +2,15 @@
     box-sizing: border-box;
 }
 
+
 html {
     font-family: sans-serif;
 }
 
+ body {
+        font-family: 'josefin+slab', serif;
+        font-size: 48px;
+      }
 .alignChildren {
     font-size: 0;
 }
@@ -16,12 +21,22 @@ html {
     vertical-align: top;
 }
 
-#container * {
-    border: 1px solid grey;
+
+body {
+    background: url('https://s-media-cache-ak0.pinimg.com/originals/7a/0a/8f/7a0a8f1598929e7d03624928092450b6.jpg');
+
+}
+
+
+#container{
+    /* border: 1px solid grey; */
+    padding: 3px;
+    color: white;
 }
 
 .searchFunction {
 	margin: 0 auto;
+	font-size: 50px;
 }
 
 div.buttons {
@@ -106,7 +121,7 @@ button {
 	width: 100%;
 	height: 0;
 	bottom: 0;
-	transition: all .2s;
+	transition: all 2s;
 }
 
 
@@ -122,41 +137,104 @@ p.temp {
 .tempLevel {
     bottom: 0;
     background-color: red;
-    transition: all .2s;
+    transition: all 2s;
 
 }
 
 .rainLevel {
     bottom: 0;
     background-color: green;
-    transition: all .2s;
+    transition: all 2s;
 
 }
 
 
 /* HOURS */
+p.hed {
+	width: 100%;
+	height: 100%;	
+}
 
 .hours {
     padding: 5px;
-    overflow: scroll;
+    width: 80%;
+    margin: 20px auto;
+	display: block;
 }
 
 .hourContainer {
-    position: relative;
+    display: inline-block;
+    flex-direction: row;
+    width: 10%;
+}
+
+.hourContainer > *{
+	height: 200px;
+	width: 50%;
+	background: linear-gradient(top, #cedbe9 0%,#aac5de 17%,#6199c7 50%,#419ad6 64%,#4bb8f0 71%,#3a8bc2 84%,#3a84c3 100%,#26558b 100%);
+	position: relative;
+}
+
+.hourContainer > * > * {
+	position: absolute;
+	width: 100%;
+	height: 0;
+	bottom: 0;	
+	transition: all s;
 }
 
 .data {
-    bottom: 1%;
+    height: 100px;
+    width: 100%;
 }
 
+
+.tempWrapper{
+    bottom: 0;
+    width: 50%;
+    height: 100px;
+    right: 0;
+	transition: all 2s;
+
+}
+
+
+.rainWrapper {
+    height: 100px;
+    width: 50%;
+    bottom: 0;
+    display: inline-block; 
+	transition: all 2s;
+
+}
+
+
 .tempHours {
+	text-align: center;
+	vertical-align:text-bottom;
+	position: absolute;
     background-color: indianred;
     color: snow;
+    bottom: 0;
+    margin: 0 auto;
+    width: 40px;
+    height:40px;
+    border-radius: 50px;
+	transition: all 2s;
+
 }
 
 .rainHours {
+	position: absolute;
     background-color: seagreen;
     color: snow;
+    display: inline-block;
+    bottom: 0;
+    margin: 0 auto;
+    width: 100%;
+	transition: all 2s;
+
+
 }
 
 
@@ -166,12 +244,14 @@ p.temp {
 }
 
 .days {
-	flex-direction: row;
+
 
 }
 
 .dayData {
-	flex: ;
+	
+	width: 80%;
+
 }
 
 .max {
