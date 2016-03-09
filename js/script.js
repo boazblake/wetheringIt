@@ -60,12 +60,12 @@ function render_Now_Weather(nowData) {
     var rain = now_Info.humidity.toPrecision(2)
     var summary = now_Info.summary
     var HTML_Str_To_DOM = '<div class="lPane">'
-        HTML_Str_To_DOM +=      '<div class="datenow">' + fullDate + '</div>'
+        HTML_Str_To_DOM +=      '<p class="dateNow">' + fullDate + '</p>'
         HTML_Str_To_DOM +=       '<p class="summaryNow">' + summary + '</p></div>'
         HTML_Str_To_DOM += '</div>'
         HTML_Str_To_DOM += '<div class="rPane alignChildren">'
-        HTML_Str_To_DOM +=    '<div class="thermometer"><div class="tempLevel"><p class="temp">' + temp + '</p></div></div>'
-        HTML_Str_To_DOM +=    '<div class="rainNow"><div class="rainLevel"><p class="rain">' + rain + '</p></div>'
+        HTML_Str_To_DOM +=    '<div class="thermometer"><div class="tempLevel"><p class="temp">' + temp + '&deg F</p></div></div>'
+        HTML_Str_To_DOM +=    '<div class="rainNow"><div class="rainLevel"><p class="rain">' + rain + '% Humidity</p></div>'
         HTML_Str_To_DOM +=  '</div>'
 
     container.innerHTML = HTML_Str_To_DOM
@@ -199,17 +199,17 @@ function render_Days_Weather(daysData) {
         var fullYear = date.getFullYear()
         var fullDate = day + ' ' + month + ' ' + dayOfMonth + ' ' + fullYear
         
-        HTML_Str_To_DOM += '<div class="week">'
+        HTML_Str_To_DOM += 	'<div class="dayObject">'
         HTML_Str_To_DOM +=    '<div class="dayDate"><h5 class="date">' + fullDate + '</h5></div>'
         HTML_Str_To_DOM +=    '<div class="dayData">'
         HTML_Str_To_DOM +=        '<div class="tempMaxHeight"><div class="max">Tmax' + daysArray[i].temperatureMax.toPrecision(2) + '</div></div>'
         HTML_Str_To_DOM +=        '<div class="tempMinHeight"><div class="min">Tmin' + daysArray[i].temperatureMin.toPrecision(2) + '</div></div>'
         HTML_Str_To_DOM +=        '<div class="rainHeight"><div class="rainDays">Humidity' + daysArray[i].humidity.toPrecision(2) + '</div></div>'
         HTML_Str_To_DOM +=    '</div>'
-        HTML_Str_To_DOM += '</div>'
+        HTML_Str_To_DOM += 	  '</div>'
     }
     // console.log(HTML_Str_To_DOM)
-    container.innerHTML = HTML_Str_To_DOM
+    container.innerHTML = '<div class="week">' + HTML_Str_To_DOM + '</div>'
 }
 
 // Search Function

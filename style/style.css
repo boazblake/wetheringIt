@@ -30,34 +30,63 @@ body {
 
 #container{
     /* border: 1px solid grey; */
-    padding: 3px;
     color: white;
+    height: 100vh;
 }
 
 .searchFunction {
+	position: absolute;
 	margin: 0 auto;
 	font-size: 50px;
+	left:100px;
+	top: 150px;
+	opacity: 0.2;
+	transition: all ease 2s;
 }
 
-div.buttons {
+.searchFunction:hover{
+	opacity: 1;
+
+}
+
+
+.buttons {
+	position: relative;
+	display: block;
+	height: 200px;
 	text-align: center;
+	width: 500px;
+	margin: 0 auto;
+	margin-top: 150px;
+	margin-right:350px;
+
+}
+
+.nowBut {
+	margin-top: -60px;
+
+}
+
+.hourBut {
+	margin-top: -30px;
+}
+
+.daysBut {
+	margin-top: 0px;
 }
 
 .button {
-	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+/* 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff; */
 	box-shadow:inset 0px 1px 0px 0px #ffffff;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
+/* 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf));
 	background:-moz-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
 	background:-webkit-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
 	background:-o-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
-	background:-ms-linear-gradient(top, #ededed 5%, #dfdfdf 100%);
+	background:-ms-linear-gradient(top, #ededed 5%, #dfdfdf 100%); */
 	background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf',GradientType=0);
 	background-color:#ededed;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
+	/* -webkit-border-radius:6px; */
 	border:1px solid #dcdcdc;
 	display:inline-block;
 	cursor:pointer;
@@ -68,6 +97,12 @@ div.buttons {
 	padding:6px 24px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #ffffff;
+    border-radius: 10%;
+    text-align: center;
+    width: 100px;
+    height: 50px;
+    margin: 10px;
+
 }
 .button:hover {
 	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
@@ -84,15 +119,11 @@ div.buttons {
 	top:1px;
 }
 
-button {
-	text-align: center;
-    width: 100px;
-    height: 50px;
-    border-radius: 10%;
-}
 
 .weather {
-    width: 100%;
+	/* display: block; */
+	position: relative;
+	margin-top: -10%;
 }
 
 
@@ -101,18 +132,18 @@ button {
 .weather .lPane,
 .weather .rPane {
 	max-width: 600px;
-	margin: 20px auto;
+	margin: 0 auto;
 	display: block;
 }
 
 .lPane {
-
 }
 
 .rPane > *{
 	height: 200px;
 	width: 50%;
-	background: #ddd;
+	background: -webkit-linear-gradient(right, rgba(221,221,221,0) 0%,rgba(221,221,221,0.8) 15%,rgba(221,221,221,1) 19%,rgba(221,221,221,1) 20%,rgba(221,221,221,1) 50%,rgba(221,221,221,0.8) 80%,rgba(221,221,221,0.6) 81%,rgba(221,221,221,0.4) 85%,rgba(2221,221,221,0.0) 100%);
+	background: linear-gradient(to top, rgba(221,221,221, 0.2), rgba(221,221,221, 0.0));
 	position: relative;
 }
 
@@ -124,27 +155,66 @@ button {
 	transition: all 2s;
 }
 
-
-
-p.rain {
-	margin: 0;
-}
-
-p.temp {
-    margin: 0;
-}
-
 .tempLevel {
     bottom: 0;
-    background-color: red;
+/*     background: linear-gradient(
+      to right, 
+      red, #f06d06
+    ); */
+	background:-webkit-linear-gradient(right, rgba(193,51,38,0) 0%,rgba(193,51,38,0.8) 15%,rgba(193,51,38,1) 19%,rgba(193,51,38,1) 20%,rgba(206,78,39,1) 50%,rgba(188,108,37,1) 80%,rgba(188,108,37,1) 81%,rgba(188,108,37,0.8) 85%,rgba(188,108,37,0) 100%);
     transition: all 2s;
-
+	border-radius:20%;
 }
+
 
 .rainLevel {
     bottom: 0;
     background-color: green;
-    transition: all 2s;
+    transition: all ease 2s;
+    background: -webkit-linear-gradient(right, rgba(77,160,32,0) 0%,rgba(77,160,32,0.8) 15%,rgba(77,160,32,1) 19%,rgba(77,160,32,1) 20%,rgba(20,76,14,1) 50%,rgba(29,145,42,1) 80%,rgba(29,145,42,1) 81%,rgba(29,145,42,0.8) 85%,rgba(29,145,42,0) 100%);
+	transition: all ease-in 2s;    
+
+}
+
+p.temp {
+	position: absolute;
+	display: none;
+	bottom: -35px;
+	left: 50%;
+	transform: translateX(-50%);
+	transition: all ease 2s;
+	background:-webkit-linear-gradient(right, rgba(193,51,38,0) 0%,rgba(193,51,38,0.8) 15%,rgba(193,51,38,1) 19%,rgba(193,51,38,1) 20%,rgba(206,78,39,1) 50%,rgba(188,108,37,1) 80%,rgba(188,108,37,1) 81%,rgba(188,108,37,0.8) 85%,rgba(188,108,37,0) 100%);
+
+
+}
+
+p.rain {
+	position: absolute;
+	display: none;
+	bottom: -35px;
+	left: 50%;
+	transform: translateX(-50%);
+	transition: all ease 2s;
+	/* background: -webkit-linear-gradient(right, rgba(221,221,221,0) 0%,rgba(221,221,221,0.8) 15%,rgba(221,221,221,1) 19%,rgba(221,221,221,1) 20%,rgba(221,221,221,1) 50%,rgba(221,221,221,0.8) 80%,rgba(221,221,221,0.6) 81%,rgba(221,221,221,0.4) 85%,rgba(2221,221,221,0.0) 100%); */
+	background: linear-gradient(to top, rgba(221,221,221, 0.2), rgba(221,221,221, 0.0));
+    background: -webkit-linear-gradient(right, rgba(77,160,32,0) 0%,rgba(77,160,32,0.8) 15%,rgba(77,160,32,1) 19%,rgba(77,160,32,1) 20%,rgba(20,76,14,1) 50%,rgba(29,145,42,1) 80%,rgba(29,145,42,1) 81%,rgba(29,145,42,0.8) 85%,rgba(29,145,42,0) 100%);
+
+}
+
+.rainLevel:hover > p.rain {
+	display: block;
+	transition: all ease-in 2s;    
+}
+
+.tempLevel:hover > p.temp {
+	display: block;
+}
+
+
+.lPane p{
+	font-size: 2em;
+	display: inline-block;
+padding: 20px;
 
 }
 
@@ -166,6 +236,10 @@ p.hed {
     display: inline-block;
     flex-direction: row;
     width: 10%;
+    	background: -webkit-linear-gradient(right, rgba(221,221,221,0) 0%,rgba(221,221,221,0.8) 15%,rgba(221,221,221,1) 19%,rgba(221,221,221,1) 20%,rgba(221,221,221,1) 50%,rgba(221,221,221,0.8) 80%,rgba(221,221,221,0.6) 81%,rgba(221,221,221,0.4) 85%,rgba(2221,221,221,0.0) 100%);
+	background: linear-gradient(to top, rgba(221,221,221, 0.2), rgba(221,221,221, 0.0));
+
+
 }
 
 .hourContainer > *{
@@ -173,21 +247,28 @@ p.hed {
 	width: 50%;
 	background: linear-gradient(top, #cedbe9 0%,#aac5de 17%,#6199c7 50%,#419ad6 64%,#4bb8f0 71%,#3a8bc2 84%,#3a84c3 100%,#26558b 100%);
 	position: relative;
+
 }
 
-.hourContainer > * > * {
+.hourContainer > * > *{
 	position: absolute;
 	width: 100%;
 	height: 0;
 	bottom: 0;	
 	transition: all s;
+
+
 }
 
 .data {
     height: 100px;
     width: 100%;
+    margin:0 auto;
 }
 
+p.hed {
+	text-align: center;
+}
 
 .tempWrapper{
     bottom: 0;
@@ -195,17 +276,26 @@ p.hed {
     height: 100px;
     right: 0;
 	transition: all 2s;
-
 }
-
 
 .rainWrapper {
     height: 100px;
     width: 50%;
     bottom: 0;
+    left: -30%;
     display: inline-block; 
 	transition: all 2s;
-
+	margin-top: 50px;
+	margin-left: 50px;
+	width: 30px;
+	height: 30px;
+	overflow: hidden;
+	border-bottom-right-radius: 50%;
+	border-bottom-left-radius: 50%;
+	border-top-left-radius: 50%;
+	-webkit-transform:rotate(-45deg);
+	z-index: 99;
+	/* background: rgba(40,52,214,0.8); */
 }
 
 
@@ -213,45 +303,60 @@ p.hed {
 	text-align: center;
 	vertical-align:text-bottom;
 	position: absolute;
-    background-color: indianred;
+    /* background-color: indianred; */
+	background:-webkit-linear-gradient(right, rgba(193,51,38,0) 0%,rgba(193,51,38,0.8) 15%,rgba(193,51,38,1) 19%,rgba(193,51,38,1) 20%,rgba(206,78,39,1) 50%,rgba(188,108,37,1) 80%,rgba(188,108,37,1) 81%,rgba(188,108,37,0.8) 85%,rgba(188,108,37,0) 100%);
     color: snow;
     bottom: 0;
     margin: 0 auto;
     width: 40px;
-    height:40px;
+    height:30px;
     border-radius: 50px;
 	transition: all 2s;
-
+	padding-top: 30px;
 }
 
 .rainHours {
 	position: absolute;
-    background-color: seagreen;
+	background: -webkit-linear-gradient(top, rgba(77,160,32,0.6) 0%,rgba(77,160,32,0.8) 15%,rgba(77,160,32,1) 19%,rgba(77,160,32,1) 20%,rgba(20,76,14,1) 50%,rgba(29,145,42,1) 80%,rgba(29,145,42,1) 81%,rgba(29,145,42,0.8) 85%,rgba(29,145,42,0.6) 100%);
+    /* background-color: seagreen; */
     color: snow;
     display: inline-block;
     bottom: 0;
     margin: 0 auto;
     width: 100%;
 	transition: all 2s;
-
-
+	display: block;
+	height: 50px;
+	width: 50px;
+	margin: 0 auto;
+	-webkit-transform: rotate(45deg);
+	padding-top:30px;
 }
 
+.rainHours:hover {
+	opacity: .5;
+}
+
+.tempHours:hover {
+	opacity: .5;
+}
 
 /* DAYS */
 
 .week {
-}
-
-.days {
-
-
-}
-
-.dayData {
-	
+	position: relative;
+	display: block;
 	width: 80%;
+	top: 100px;
+	left: 50%;
+	transform: translateX(-50%);
+}
 
+.dayObject {
+	padding: 2px;
+
+	display: inline-block;
+	/* width: 80%; */
 }
 
 .max {
