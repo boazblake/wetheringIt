@@ -297,4 +297,4 @@ searchBar.addEventListener('keydown', newSearch)
 buttonsContainer.addEventListener('click', viewChanger)
 
 var rtr = new WeatherRouter() // (1.a)defining a new instance of the weather construct.(every time the page is refreshed)
-window.location.hash = '' //(1.b)the hash is cleared to remove previouse location
+// window.location.hash = '' //(1.b)the hash is cleared to remove previouse location
