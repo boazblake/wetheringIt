@@ -24,7 +24,6 @@ html {
 
 body {
     background: url('https://s-media-cache-ak0.pinimg.com/originals/7a/0a/8f/7a0a8f1598929e7d03624928092450b6.jpg');
-
 }
 
 
@@ -172,7 +171,7 @@ body {
     background-color: green;
     transition: all ease 2s;
     background: -webkit-linear-gradient(right, rgba(77,160,32,0) 0%,rgba(77,160,32,0.8) 15%,rgba(77,160,32,1) 19%,rgba(77,160,32,1) 20%,rgba(20,76,14,1) 50%,rgba(29,145,42,1) 80%,rgba(29,145,42,1) 81%,rgba(29,145,42,0.8) 85%,rgba(29,145,42,0) 100%);
-	transition: all ease-in 2s;    
+	transition: all ease 2s;    
 
 }
 
@@ -203,7 +202,7 @@ p.rain {
 
 .rainLevel:hover > p.rain {
 	display: block;
-	transition: all ease-in 2s;    
+	transition: all ease in 2s;    
 }
 
 .tempLevel:hover > p.temp {
@@ -303,9 +302,9 @@ p.hed {
 	text-align: center;
 	vertical-align:text-bottom;
 	position: absolute;
-    /* background-color: indianred; */
 	background:-webkit-linear-gradient(right, rgba(193,51,38,0) 0%,rgba(193,51,38,0.8) 15%,rgba(193,51,38,1) 19%,rgba(193,51,38,1) 20%,rgba(206,78,39,1) 50%,rgba(188,108,37,1) 80%,rgba(188,108,37,1) 81%,rgba(188,108,37,0.8) 85%,rgba(188,108,37,0) 100%);
     color: snow;
+    padding-bottom:20px ;
     bottom: 0;
     margin: 0 auto;
     width: 40px;
@@ -313,6 +312,7 @@ p.hed {
     border-radius: 50px;
 	transition: all 2s;
 	padding-top: 30px;
+	opacity: .5;
 }
 
 .rainHours {
@@ -331,14 +331,15 @@ p.hed {
 	margin: 0 auto;
 	-webkit-transform: rotate(45deg);
 	padding-top:30px;
+	opacity: .5;
 }
 
 .rainHours:hover {
-	opacity: .5;
+	opacity: 1;
 }
 
 .tempHours:hover {
-	opacity: .5;
+	opacity: 1;
 }
 
 /* DAYS */
