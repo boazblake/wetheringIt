@@ -2,6 +2,10 @@ console.log($)
 console.log(Backbone)
 
 // Backbone Router extension:
+// 2a. Extending of the backbone route framework by adding out routes. Input is an object with a routes attribute 
+// and 5 methods. The routes attribute is a builtin feature and defines the 'string literal' hashpattern that 
+//backbone will match on left) with the functions pointing to the methods to be performed (on right). 
+//The methods take in as input 
 var WeatherRouter = Backbone.Router.extend({
     routes: {
         'now/:lat/:lng': 'handle_Now_page',
@@ -33,14 +37,12 @@ var WeatherRouter = Backbone.Router.extend({
 
     handle_Loading_Page: function() {
         function success_CallBack(positionObject) {
-            console.log(positionObject)
             var lat = positionObject.coords.latitude
             var lng = positionObject.coords.longitude
             window.location.hash = "now" + '/' + lat + '/' + lng
         }
 
         function failed_CallBack(positionObject) {
-            console.log(positionObject)
         }
 
         window.navigator.geolocation.getCurrentPosition(success_CallBack, failed_CallBack)
@@ -59,6 +61,7 @@ var weatherModel = Backbone.Model.extend({
 })
 
 var NowView = Backbone.View.extend({
+
     el: '.weather',
     initialize: function(someModel) {
         this.model = someModel
@@ -67,14 +70,14 @@ var NowView = Backbone.View.extend({
     },
 
     _render: function() {
-        console.log(this.model)
         var nowData = this.model.attributes.currently
-        console.log(nowData)
 
         var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         var monthName = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
-        var now_Info = nowData.currently
+
+        var now_Info = nowData
+
         var temp = now_Info.temperature.toPrecision(2)
         var date_Info = now_Info.time
         var date = new Date(date_Info * 1000)
@@ -86,8 +89,8 @@ var NowView = Backbone.View.extend({
         var rain = now_Info.humidity.toPrecision(2)
         var summary = now_Info.summary
         var HTML_Str_To_DOM = '<div class="lPane">'
-        HTML_Str_To_DOM += '<p class="dateNow">' + fullDate + '</p>'
-        HTML_Str_To_DOM += '<p class="summaryNow">' + summary + '</p></div>'
+        HTML_Str_To_DOM += '<p class="otto dateNow">' + fullDate + '</p>'
+        HTML_Str_To_DOM += '<p class="otto summaryNow">' + summary + '</p></div>'
         HTML_Str_To_DOM += '</div>'
         HTML_Str_To_DOM += '<div class="rPane alignChildren">'
         HTML_Str_To_DOM += '<div class="thermometer"><div class="tempLevel"><p class="temp">' + temp + '&deg F</p></div></div>'
@@ -107,13 +110,11 @@ var NowView = Backbone.View.extend({
         document.querySelector('.tempLevel').style.height = redHeight + "px"
 
 
-        console.log(rain)
         var greenHeight = (parseInt(rain) * rainHeight) * maxRain // write a comment here to explain
         document.querySelector('.rainLevel').style.height = parseInt(rain * 100) + '%'
-        console.log(temp)
-
     }
 })
+
 
 var HoursView = Backbone.View.extend({
     el: '.weather',
@@ -124,17 +125,12 @@ var HoursView = Backbone.View.extend({
     },
     
     _render: function() {
-    	console.log(this.model)
     	var hoursData = this.model.attributes
-    	console.log(hoursData)
         var hourArrayTemp = null
         var hourArrayRain = null
-        console.log(hoursData)
 
-        console.log(hoursData.hourly)
 
         var hour_summery = hoursData.hourly.summary
-        console.log(hour_summery)
 
         var hour_by_Hour_Array = hoursData.hourly.data
 
@@ -148,7 +144,6 @@ var HoursView = Backbone.View.extend({
 
                 targetDOM_element.innerHTML = this._template(input_data)
 
-                console.log(targetDOM_element)
             }
         }
 
@@ -156,7 +151,6 @@ var HoursView = Backbone.View.extend({
 
         function hour_by_Hour_Template(hour_Array) {
             var array_HTML_str = ''
-            console.log(hour_Array)
 
 
             for (var i = 1; i < 25; i++) {
@@ -170,7 +164,7 @@ var HoursView = Backbone.View.extend({
                 array_HTML_str += '<div class="hourContainer">' + hour_Box + '</div>'
             }
 
-            return '<div class="hours"><h3>Today will be: ' + hour_summery + '</h3>' + array_HTML_str + '</div>'
+            return '<div class="hours"><h3>forcast for today: ' + hour_summery + '</h3><div class="hourBox">' + array_HTML_str + '</div></div>'
         }
 
         var hourViewInstance = new View_Constructor('.weather', hour_by_Hour_Template)
@@ -179,16 +173,16 @@ var HoursView = Backbone.View.extend({
 
         // ////////// Setting the temp bar height
         // //defining arbitary max values for the temp and the rain gauages for the 100% reference. (myTemp/maxTemp * myHeight/maxHeight) - thankyou for making me finally learn this relationship!
-        // var maxTemp = 150
-        // var maxRain = 150
-        // var thermometer = 100
-        // var rainHeight = 100
-        // var redHeight = ((parseInt(hourArrayTemp)) / maxTemp) * thermometer  // write a comment here to explain: // the relationship between the temp variables is (cross multiplied) to the reltaionship between the heights of the thermom div and its background 
-        // document.querySelector('.tempHours').style.height = '2%' //redHeight + "%"
+        var maxTemp = 150
+        var maxRain = 150
+        var thermometer = 100
+        var rainHeight = 100
+        var redHeight = ((parseInt(hourArrayTemp)) / maxTemp) * thermometer  // write a comment here to explain: // the relationship between the temp variables is (cross multiplied) to the reltaionship between the heights of the thermom div and its background 
+        document.querySelector('.tempHours').style.height = redHeight + "%"
 
         // console.log(hourArrayRain)
-        // var greenHeight = (parseInt(hourArrayRain) * rainHeight) * maxRain // write a comment here to explain
-        // document.querySelector('.rainHours').style.height = '1.4%'//parseInt(hourArrayRain * 100) + '%'
+        var greenHeight = (parseInt(hourArrayRain) * rainHeight) * maxRain // write a comment here to explain
+        document.querySelector('.rainHours').style.height = parseInt(hourArrayRain * 100) + '%'
         // console.log(hourArrayTemp)
     }
 })
@@ -205,12 +199,9 @@ var DaysView = Backbone.View.extend({
 
 
     _render: function() {
-    	console.log(this.model)
         var daysData = this.model.attributes
-        console.log(daysData)
         var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         var monthName = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-        console.log(daysData)
         var day_Info = daysData.daily.summary
         var daysArray = daysData.daily.data
 
@@ -219,7 +210,6 @@ var DaysView = Backbone.View.extend({
 
         for (var i = 0; i < daysArray.length; i++) {
             var date = new Date(daysArray[i].time * 1000)
-            console.log(date)
             var day = weekday[date.getDay()];
             var month = monthName[date.getMonth()]
             var dayOfMonth = date.getDate()
@@ -256,7 +246,6 @@ function geocoderRequest(location) {
     }
     var baseURL = 'https://maps.googleapis.com/maps/api/geocode/json'
     var fullURL = baseURL + _formattedURLParams(params)
-    console.log(fullURL)
     var promise_To_Google = $.getJSON(fullURL)
     promise_To_Google.then(parse_Google_Lat_Long)
 }
@@ -265,18 +254,15 @@ function geocoderRequest(location) {
 function parse_Google_Lat_Long(google_Data) {
     var results = google_Data.results
     var google_lat_Long = results[0].geometry.location
-    console.log(google_lat_Long)
     var lat = google_lat_Long.lat
     var long = google_lat_Long.lng
     var route = window.location.hash.substr(1)
     var routeParts = route.split('/')
-    console.log(routeParts[0])
     window.location.hash = routeParts[0] + '/' + lat + '/' + long
 }
 
 // Parameters for Google Geocoder
 function _formattedURLParams(paramsObj) {
-    console.log(paramsObj)
     var paramString = ''
     for (var paramKey in paramsObj) {
         paramsObjValue = paramsObj[paramKey]
@@ -297,76 +283,18 @@ function viewChanger(clickEvent) {
 
     var button_El = clickEvent.target,
         newView = button_El.value
-    console.log(newView)
     window.location.hash = newView + '/' + lat + '/' + lng
 }
 
 // Render Pages:
-var NowView = Backbone.View.extend({
-
-    el: '.weather',
-    initialize: function(someModel) {
-        this.model = someModel
-        var boundRender = this._render.bind(this)
-        this.model.on('sync', boundRender)
-    },
-
-    _render: function() {
-        console.log(this.model)
-        var nowData = this.model.attributes.currently
-        console.log(nowData)
-
-        var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-        var monthName = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 
-        var now_Info = nowData
-        console.log(now_Info)
 
-        var temp = now_Info.temperature.toPrecision(2)
-        var date_Info = now_Info.time
-        var date = new Date(date_Info * 1000)
-        var day = weekday[date.getDay()];
-        var month = monthName[date.getMonth()]
-        var dayOfMonth = date.getDate()
-        var fullYear = date.getFullYear()
-        var fullDate = day + ' ' + month + ' ' + dayOfMonth + ' ' + fullYear
-        var rain = now_Info.humidity.toPrecision(2)
-        var summary = now_Info.summary
-        var HTML_Str_To_DOM = '<div class="lPane">'
-        HTML_Str_To_DOM += '<p class="dateNow">' + fullDate + '</p>'
-        HTML_Str_To_DOM += '<p class="summaryNow">' + summary + '</p></div>'
-        HTML_Str_To_DOM += '</div>'
-        HTML_Str_To_DOM += '<div class="rPane alignChildren">'
-        HTML_Str_To_DOM += '<div class="thermometer"><div class="tempLevel"><p class="temp">' + temp + '&deg F</p></div></div>'
-        HTML_Str_To_DOM += '<div class="rainNow"><div class="rainLevel"><p class="rain">' + rain + '% Humidity</p></div>'
-        HTML_Str_To_DOM += '</div>'
-
-        this.el.innerHTML = HTML_Str_To_DOM
-
-
-        ////////// Setting the temp bar height
-        //defining arbitary max values for the temp and the rain gauages for the 100% reference. (myTemp/maxTemp * myHeight/maxHeight) - thankyou for making me finally learn this relationship!
-        var maxTemp = 150
-        var maxRain = 150
-        var thermometer = 300
-        var rainHeight = 300
-        var redHeight = ((parseInt(temp)) / maxTemp) * thermometer // write a comment here to explain: // the relationship between the temp variables is (cross multiplied) to the reltaionship between the heights of the thermom div and its background 
-        document.querySelector('.tempLevel').style.height = redHeight + "px"
-
-
-        console.log(rain)
-        var greenHeight = (parseInt(rain) * rainHeight) * maxRain // write a comment here to explain
-        document.querySelector('.rainLevel').style.height = parseInt(rain * 100) + '%'
-        console.log(temp)
-    }
-})
-
-
-var container = document.querySelector('.weather')
+// var container = document.querySelector('.weather')
 var buttonsContainer = document.querySelector('.buttons')
-var searchBar = document.querySelector('input[type=search]')
+var searchBar = document.querySelector('input[type=textarea]')
 searchBar.addEventListener('keydown', newSearch)
 buttonsContainer.addEventListener('click', viewChanger)
 
-var rtr = new WeatherRouter()
+var rtr = new WeatherRouter() // (1.a)defining a new instance of the weather construct.(every time the page is refreshed)
+window.location.hash = '' //(1.b)the hash is cleared to remove previouse location
