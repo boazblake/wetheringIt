@@ -2,10 +2,14 @@ console.log($)
 console.log(Backbone)
 
 // Backbone Router extension:
-// 2a. Extending of the backbone route framework by adding out routes. Input is an object with a routes attribute 
-// and 5 methods. The routes attribute is a builtin feature and defines the 'string literal' hashpattern that 
-//backbone will match on left) with the functions pointing to the methods to be performed (on right). 
-//The methods take in as input 
+// 
+// 2a. Extending the backbone route framework by adding routes. Input is an object with a routes attribute 
+// and 5 methods. The routes attribute is a built in feature of backbone and begins with the command on line 53 (history.start) 
+// the routes object defines the 'string literal' hashpattern that backbone will match (on left) and pointing to the methods to be invoked (on right). 
+// Each method creates a new instance of the the weathermodel and invokes the function i created to define the URL, made of the lat and long and in the format hat the API required.
+// 
+// Depending on the view desired by the user (i.e current weather, 24 hr or week) the approcpriate model is instantiated by fetching from the same weather API URL.
+
 var WeatherRouter = Backbone.Router.extend({
     routes: {
         'now/:lat/:lng': 'handle_Now_page',
@@ -53,12 +57,17 @@ var WeatherRouter = Backbone.Router.extend({
     }
 })
 
-// Backbone Model Extension:
+
+
+// Backbone Model Extension with the url of the weather API:
 var weatherModel = Backbone.Model.extend({
     _generateURL: function(lat, lng) {
         this.url = "https://api.forecast.io/forecast/d7c581e2b766cf40745ce91f6d928b84/" + lat + "," + lng + "?callback=?"
     }
 })
+
+
+// The views are synced to the return of the data using the backbone '.on sync' method wich takes in the model. The prototype instance model and data are then bound to ensure that the context is maintained.
 
 var NowView = Backbone.View.extend({
 
@@ -297,4 +306,3 @@ searchBar.addEventListener('keydown', newSearch)
 buttonsContainer.addEventListener('click', viewChanger)
 
 var rtr = new WeatherRouter() // (1.a)defining a new instance of the weather construct.(every time the page is refreshed)
-// window.location.hash = '' //(1.b)the hash is cleared to remove previouse location
